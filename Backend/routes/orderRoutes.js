@@ -6,8 +6,11 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 
-// Ensure uploads directory exists
-const uploadDir = path.join(__dirname, '../uploads');
+// Ensure uploads directory exists (Use /tmp for Vercel, as project dir is read-only)
+const uploadDir = process.env.VERCEL 
+    ? path.join('/tmp', 'uploads') 
+    : path.join(__dirname, '..', 'uploads');
+
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -15,7 +18,7 @@ if (!fs.existsSync(uploadDir)) {
 // Configure Multer storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '_'));
@@ -36,7 +39,8 @@ router.post('/upload', upload.single('image'), (req, res) => {
         }
         
         // Return the full URL for the image
-        const imageUrl = `http://localhost:${process.env.PORT || 5001}/uploads/${req.file.filename}`;
+        const protocol = req.headers['x-forwarded-proto'] || 'http';
+        const imageUrl = `${protocol}://${req.get('host')}/uploads/${req.file.filename}`;
         
         res.status(200).json({
             success: true,

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for your backend API
-const API_URL = 'http://localhost:5001/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 // Create axios instance with timeout
 const api = axios.create({
@@ -100,7 +100,7 @@ export const orderApi = {
   // Health check — to test if backend is reachable
   healthCheck: async () => {
     try {
-      const response = await axios.get('http://localhost:5001/', { timeout: 5000 });
+      const response = await axios.get(API_URL.replace('/api', ''), { timeout: 5000 });
       return response.status === 200;
     } catch {
       return false;
