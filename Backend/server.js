@@ -22,12 +22,7 @@ app.use('/uploads', express.static(uploadDir));
 
 // Middleware
 app.use(cors({
-  origin: [
-    'http://localhost:3000', 
-    'http://127.0.0.1:3000', 
-    'http://localhost:3001',
-    'https://drawing-blond.vercel.app'
-  ],
+  origin: true, // Allow all origins for easier deployment troubleshooting
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
