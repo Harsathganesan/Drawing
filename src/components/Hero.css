@@ -1,0 +1,238 @@
+.hero-section {
+  padding-top: 5rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to right, #9333ea, #ec4899, #f97316);
+}
+
+.hero-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column-reverse; /* Image first in mobile */
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .hero-container {
+    padding: 0 1.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.hero-content {
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hero-content {
+    text-align: left;
+    width: 45%;
+    padding-right: 2rem;
+  }
+}
+
+.hero-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 3.75rem;
+  }
+}
+
+.hero-highlight {
+  color: #fde047;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: #fef08a;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero-subtitle {
+    font-size: 1.875rem;
+  }
+}
+
+.hero-description {
+  font-size: 1.125rem;
+  color: white;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+    /* Cooler, calmer version of the gradient with lower contrast */
+    background: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #fb923c 100%);
+    background-attachment: fixed;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.35rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+/* Social Media Icons */
+.hero-social {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero-social {
+    justify-content: flex-start;
+    margin-bottom: 1.75rem;
+  }
+}
+
+.social-icon {
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Instagram - Original Colors */
+.social-icon.instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.social-icon.instagram:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 16px rgba(225, 48, 108, 0.4);
+}
+
+/* WhatsApp - Original Green */
+.social-icon.whatsapp {
+  background: linear-gradient(45deg, #25D366, #128C7E);
+}
+
+.social-icon.whatsapp:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 16px rgba(37, 211, 102, 0.4);
+}
+
+/* YouTube - Original Red */
+.social-icon.youtube {
+  background: linear-gradient(45deg, #FF0000, #CC0000);
+}
+
+.social-icon.youtube:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 16px rgba(255, 0, 0, 0.4);
+}
+
+.hero-button {
+  background-color: #facc15;
+  color: #111827;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-button:hover {
+  background-color: #fde047;
+  transform: scale(1.05);
+}
+
+.hero-image-wrapper {
+  margin-bottom: 2rem; /* Space between image and content below */
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hero-image-wrapper {
+    margin-bottom: 0;
+    margin-top: 0;
+    width: 55%;
+    justify-content: flex-end;
+  }
+}
+
+/* Bigger Image Container */
+.hero-image-container {
+  width: 22rem;
+  height: 22rem;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .hero-image-container {
+    width: 18rem; /* Smaller for mobile */
+    height: 18rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-image-container {
+    width: 30rem;
+    height: 30rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-image-container {
+    width: 35rem;
+    height: 35rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-image-container {
+    width: 38rem;
+    height: 38rem;
+  }
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.hero-image-container:hover .hero-image {
+  transform: scale(1.05);
+}
