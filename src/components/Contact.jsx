@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaUser, FaEnvelope, FaComment, FaInstagram, FaWhatsapp, FaMapMarkerAlt, FaSpinner, FaArrowRight } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaComment, FaInstagram, FaWhatsapp, FaMapMarkerAlt, FaSpinner } from 'react-icons/fa';
 import orderApi from '../services/orderApi';
 import './Contact.css';
 
