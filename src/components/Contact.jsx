@@ -71,7 +71,9 @@ const Contact = () => {
               </div>
               
               <div className="info-item">
-                <div className="info-icon">📧</div>
+                <div className="info-icon">
+                  <FaEnvelope />
+                </div>
                 <div>
                   <h4>Email</h4>
                   <p>harsatharts2005@gmail.com</p>
