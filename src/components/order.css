@@ -1,0 +1,479 @@
+/* order.css - Simplified Version */
+
+.order-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 100px 20px 60px; /* Clear fixed navbar */
+}
+
+.order-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 10;
+}
+
+.back-btn:hover:not(:disabled) {
+  background: #e5e7eb;
+  color: #1f2937;
+  transform: translateX(5px);
+}
+
+.back-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Header */
+.order-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+  padding: 10px 30px 0; /* Reduced top padding since button is above it */
+}
+
+.order-subtitle {
+  color: #6b7280;
+  font-size: 16px;
+  padding: 0 30px;
+  margin-bottom: 30px;
+}
+
+/* Form Content */
+.order-content {
+  padding: 20px 30px 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.left-column, .right-column {
+  width: 100%;
+}
+
+/* Form Sections */
+.form-section {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 16px;
+  height: 100%;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #667eea;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-icon {
+  color: #667eea;
+  font-size: 16px;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+  background: white;
+}
+
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-input:disabled, .form-select:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
+
+.field-hint {
+  display: block;
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+/* File Upload */
+.file-upload {
+  position: relative;
+  border: 2px dashed #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s;
+  background-color: #f9fafb;
+}
+
+.file-upload:hover {
+  border-color: #667eea;
+  background-color: #f5f3ff;
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-input:disabled {
+  cursor: not-allowed;
+}
+
+.file-upload-text {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+
+.file-hint {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Image Preview */
+.image-preview {
+  position: relative;
+  margin-top: 12px;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e5e7eb;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-image {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.remove-image:hover:not(:disabled) {
+  background-color: #dc2626;
+  transform: scale(1.1);
+}
+
+.remove-image:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Bottom Section */
+.bottom-section {
+  grid-column: span 2;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.price-summary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.summary-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+}
+
+.summary-item.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.total-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffd700;
+}
+
+/* Submit Button */
+.submit-order-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 40px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.submit-order-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.submit-order-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.terms-text {
+  font-size: 12px;
+  color: #9ca3af;
+  text-align: center;
+}
+
+/* Error and Success Messages */
+.error-message, .success-message {
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin: 0 30px 20px;
+  font-size: 14px;
+  animation: slideIn 0.3s ease;
+}
+
+.error-message {
+  background-color: #fee2e2;
+  border-left: 4px solid #ef4444;
+  color: #b91c1c;
+}
+
+.success-message {
+  background-color: #dcfce7;
+  border-left: 4px solid #22c55e;
+  color: #166534;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+/* Responsive Improvements */
+@media (max-width: 768px) {
+  .order-page {
+    padding: 20px 15px;
+  }
+
+  .order-container {
+    border-radius: 15px;
+  }
+
+  .order-content {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 15px 20px 25px;
+  }
+  
+  .bottom-section {
+    grid-column: span 1;
+    margin-top: 15px;
+  }
+  
+  .order-title {
+    font-size: 24px;
+    padding: 25px 20px 5px;
+  }
+  
+  .order-subtitle {
+    font-size: 14px;
+    padding: 0 20px;
+    margin-bottom: 15px;
+  }
+
+  .form-section {
+    padding: 15px;
+  }
+
+  .section-title {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .price-summary {
+    padding: 20px;
+  }
+  
+  .total-price {
+    font-size: 22px;
+  }
+  
+  .submit-order-btn {
+    max-width: 100%;
+    width: 100%;
+    padding: 14px;
+    font-size: 17px;
+  }
+
+  .back-btn {
+    position: static; /* Reset absolute for mobile */
+    margin: 15px 0 0 20px; /* Left aligned with margin */
+    padding: 10px 18px;
+    font-size: 14px;
+    width: fit-content;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-page {
+    padding: 85px 5px 30px; /* Reduced space but enough for navbar */
+  }
+
+  .order-container {
+    border-radius: 15px;
+    width: 100%;
+  }
+
+  .order-content {
+    padding: 10px 15px 20px;
+  }
+
+  /* Left align the button on small mobile screens */
+  .back-btn {
+    position: static; /* Reset absolute for mobile */
+    margin: 15px 0 5px 15px; /* Left aligned */
+    padding: 8px 16px;
+    font-size: 13px;
+    width: fit-content;
+    display: flex;
+  }
+
+  .order-title {
+    font-size: 20px;
+    padding: 15px 15px 5px;
+    text-align: center;
+  }
+
+  .order-subtitle {
+    padding: 0 15px;
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .form-section {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .price-summary {
+    padding: 20px;
+  }
+
+  .submit-order-btn {
+    max-width: 100%;
+    width: 100%;
+    height: 50px;
+  }
+
+  .image-preview {
+    width: 85px;
+    height: 85px;
+  }
+
+  .form-input, .form-select {
+    padding: 12px;
+    font-size: 16px;
+  }
+}
