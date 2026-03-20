@@ -82,7 +82,8 @@ const OrderSchema = new mongoose.Schema({
         default: null
     }
 }, {
-    timestamps: true // Adds createdAt and updatedAt
+    timestamps: true, // Adds createdAt and updatedAt
+    collection: 'orders' // Set collection name to 'orders'
 });
 
 // Indexes for better performance (Removed status index)
