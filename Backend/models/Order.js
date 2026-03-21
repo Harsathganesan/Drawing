@@ -65,11 +65,12 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         unique: true,
         default: function () {
-            // Auto-generate order number: ORD-2024-0001 format
+            // Auto-generate order number: ORD-2024-TIMESTAMP-RANDOM format
             const date = new Date();
             const year = date.getFullYear();
-            const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-            return `ORD-${year}-${random}`;
+            const timestamp = Date.now().toString().slice(-4);
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return `ORD-${year}-${timestamp}-${random}`;
         }
     },
 
