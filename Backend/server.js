@@ -9,10 +9,18 @@ const feedbackRoutes = require('./routes/feedbackRoutes');
 // Load env vars
 dotenv.config({ path: path.join(__dirname, '.env') });
 
-// Connect to database
-connectDB();
-
 const app = express();
+
+// Connect to database lazily through a middleware
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('DB Connection Failed:', error.message);
+    res.status(500).json({ success: false, message: 'Database Connection Error. Please verify MONGODB_URI on Vercel.' });
+  }
+});
 
 // Serve static files from uploads folder (Handle /tmp for Vercel)
 const uploadDir = process.env.VERCEL 
