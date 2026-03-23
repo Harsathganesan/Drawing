@@ -11,6 +11,15 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 
+// Middleware (Must be before any routes or DB connection so CORS headers are added)
+app.use(cors({
+  origin: true, // Allow all origins for easier deployment troubleshooting
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Connect to database lazily through a middleware
 app.use(async (req, res, next) => {
   try {
@@ -27,15 +36,6 @@ const uploadDir = process.env.VERCEL
   ? path.join('/tmp', 'uploads') 
   : path.join(__dirname, 'uploads');
 app.use('/uploads', express.static(uploadDir));
-
-// Middleware
-app.use(cors({
-  origin: true, // Allow all origins for easier deployment troubleshooting
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-}));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/orders', orderRoutes);
