@@ -91,4 +91,4 @@ const OrderSchema = new mongoose.Schema({
 OrderSchema.index({ orderDate: -1 });
 OrderSchema.index({ customerEmail: 1 });
 
-module.exports = mongoose.model('Order', OrderSchema);
+module.exports = mongoose.models.Order || mongoose.model('Order', OrderSchema);

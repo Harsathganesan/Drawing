@@ -122,7 +122,7 @@ const Order = () => {
       setSuccess(true);
 
       // Show success message
-      alert(`✅ Order placed successfully!\n\nTotal Amount: ₹${totalAmount}\n\nWe will contact you soon via WhatsApp.`);
+      alert(`✅ Order placed successfully!\n\nOrder ID: ${response.orderId}\nTotal Amount: ₹${totalAmount}\n\nWe will contact you soon via WhatsApp.`);
 
       // Clear form
       setFormData({
