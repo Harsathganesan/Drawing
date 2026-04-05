@@ -60,7 +60,12 @@ router.post('/upload', upload.single('image'), (req, res) => {
 router.post('/', async (req, res) => {
     try {
         console.log('📦 Server received a POST request at /api/orders');
-        console.log('Request Source:', req.get('origin') || 'Unknown');
+        console.log('Origin:', req.get('origin') || 'Internal');
+        console.log('Content-Type:', req.get('content-type'));
+
+        if (!process.env.MONGODB_URI) {
+             console.error('❌ MONGODB_URI is not defined in environment!');
+        }
 
         // Validation for body content
         if (!req.body || Object.keys(req.body).length === 0) {

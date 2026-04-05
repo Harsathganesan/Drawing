@@ -25,4 +25,4 @@ const feedbackSchema = new mongoose.Schema({
   collection: 'fb' // Set collection name to 'fb' as requested
 });
 
-module.exports = mongoose.model('Feedback', feedbackSchema);
+module.exports = mongoose.models.Feedback || mongoose.model('Feedback', feedbackSchema);
