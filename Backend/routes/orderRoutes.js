@@ -59,96 +59,73 @@ router.post('/upload', upload.single('image'), (req, res) => {
 // POST /api/orders
 router.post('/', async (req, res) => {
     try {
-        console.log('📦 Received order from React frontend:');
-        console.log('Order data:', JSON.stringify(req.body, null, 2));
+        console.log('📦 Server received a POST request at /api/orders');
+        console.log('Request Source:', req.get('origin') || 'Unknown');
 
-        // Create new order from request body
+        // Validation for body content
+        if (!req.body || Object.keys(req.body).length === 0) {
+            console.error('❌ Request body is empty');
+            return res.status(400).json({ success: false, message: 'Request body is empty' });
+        }
+
+        // Map frontend fields to model fields
         const orderData = {
             customerName: req.body.customerName,
             customerEmail: req.body.customerEmail,
             customerPhone: req.body.customerPhone,
             drawingType: req.body.drawingType,
             size: req.body.size,
-            price: req.body.price,
+            price: Number(req.body.price),
             description: req.body.description || '',
             specialInstructions: req.body.specialInstructions || '',
             paymentMethod: req.body.paymentMethod || 'online',
             referenceImage: req.body.referenceImage || ''
         };
 
-        // Validate required fields
+        console.log('Processing Order for:', orderData.customerName);
+
+        // Validation - ensure required fields are present
         const requiredFields = ['customerName', 'customerEmail', 'customerPhone', 'drawingType', 'size', 'price'];
-        const missingFields = requiredFields.filter(field => !orderData[field]);
-
-        if (missingFields.length > 0) {
-            return res.status(400).json({
-                success: false,
-                message: `Missing required fields: ${missingFields.join(', ')}`,
-                missingFields: missingFields
-            });
+        for (const field of requiredFields) {
+            if (!orderData[field]) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: `Required field '${field}' is missing or empty.` 
+                });
+            }
         }
 
-        // Validate price is a number
-        if (isNaN(orderData.price) || orderData.price <= 0) {
-            return res.status(400).json({
-                success: false,
-                message: 'Price must be a positive number'
-            });
-        }
-
-        // Create and save order
+        // Create and save to MongoDB
         const order = new Order(orderData);
         const savedOrder = await order.save();
 
-        console.log('✅ Order saved to MongoDB Atlas!');
-        console.log('Order ID:', savedOrder._id);
-        console.log('Order Number:', savedOrder.orderNumber);
+        console.log('✅ Order saved successfully to DB! ID:', savedOrder._id);
 
-        // Send success response
         res.status(201).json({
             success: true,
             message: '✅ Order placed successfully!',
-            order: {
-                id: savedOrder._id,
-                orderNumber: savedOrder.orderNumber,
-                customerName: savedOrder.customerName,
-                drawingType: savedOrder.drawingType,
-                price: savedOrder.price,
-                orderDate: savedOrder.orderDate
-                // Note: status field removed from response
-            }
+            orderId: savedOrder._id,
+            orderNumber: savedOrder.orderNumber
         });
 
     } catch (error) {
-        console.error('❌ Error saving order:', error);
-
-        // Handle validation errors
+        console.error('❌ CRITICAL ORDER SAVE ERROR:', error);
+        
+        // Detailed validation error handling
         if (error.name === 'ValidationError') {
-            const errors = {};
-            Object.keys(error.errors).forEach(key => {
-                errors[key] = error.errors[key].message;
-            });
-
+            const messages = Object.values(error.errors).map(err => err.message);
             return res.status(400).json({
                 success: false,
-                message: 'Validation failed',
-                errors: errors
+                message: 'Validation Failed',
+                errors: messages
             });
         }
 
-        // Handle duplicate key errors
-        if (error.code === 11000) {
-            return res.status(400).json({
-                success: false,
-                message: 'Duplicate entry. Please try again.'
-            });
-        }
-
-        // Handle other errors
+        // Database connection or other server error
         res.status(500).json({
             success: false,
-            message: 'Failed to place order. Please try again.',
-            error: error.message
+            message: 'Internal Server Error while saving order to database.',
+            error: process.env.NODE_ENV === 'development' ? error.message : 'DBSaveError'
         });
     }
 });
