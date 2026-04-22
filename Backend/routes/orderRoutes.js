@@ -59,6 +59,7 @@ router.post('/upload', upload.single('image'), (req, res) => {
 // POST /api/orders
 router.post('/', async (req, res) => {
     try {
+        console.log("Order API called");
         console.log('📦 Server received a POST request at /api/orders');
         console.log('Origin:', req.get('origin') || 'Internal');
         console.log('Content-Type:', req.get('content-type'));
@@ -115,6 +116,7 @@ router.post('/', async (req, res) => {
 
     } catch (error) {
         console.error('❌ CRITICAL ORDER SAVE ERROR:', error);
+        console.log(error); // As requested
         
         // Detailed validation error handling
         if (error.name === 'ValidationError') {
@@ -127,11 +129,7 @@ router.post('/', async (req, res) => {
         }
 
         // Database connection or other server error
-        res.status(500).json({
-            success: false,
-            message: 'Internal Server Error while saving order to database.',
-            error: process.env.NODE_ENV === 'development' ? error.message : 'DBSaveError'
-        });
+        res.status(500).json({ message: "Error saving order" });
     }
 });
 

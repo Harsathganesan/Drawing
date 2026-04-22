@@ -1,10 +1,7 @@
 import axios from 'axios';
 
 // Base URL for your backend API (Handles both local & Vercel deployment)
-const API_URL = process.env.REACT_APP_API_URL || 
-  (window.location.hostname === 'localhost' 
-    ? 'http://localhost:5001/api' 
-    : `${window.location.protocol}//${window.location.host}/api`);
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 // Create axios instance with timeout
 const api = axios.create({
