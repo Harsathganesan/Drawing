@@ -77,19 +77,17 @@ export const orderApi = {
 
   // Upload reference image
   uploadImage: async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append('image', file);
-      const response = await axios.post(`${API_URL}/orders/upload`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        timeout: 30000, // 30s for file upload
-      });
-      return response.data;
-    } catch (error) {
-      console.warn('Image upload failed, using local preview:', error);
-      // Graceful fallback — use local object URL
-      return { data: { url: URL.createObjectURL(file) } };
-    }
+    // VERCEL FIX: Instead of uploading to an ephemeral /tmp folder which gets deleted,
+    // we convert the image to Base64 so it can be stored directly inside MongoDB.
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve({ data: { url: reader.result } });
+      reader.onerror = (error) => {
+        console.warn('Image to Base64 failed, using local blob:', error);
+        resolve({ data: { url: URL.createObjectURL(file) } });
+      };
+    });
   },
 
   // Submit contact/feedback form
