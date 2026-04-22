@@ -17,8 +17,8 @@ const app = express();
 
 // Middleware (Must be before any routes or DB connection)
 app.use(cors({
-  origin: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  origin: '*', // Allows all domains
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
