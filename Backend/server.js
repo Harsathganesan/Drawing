@@ -18,9 +18,11 @@ const app = express();
 // Middleware (Must be before any routes or DB connection)
 app.use(cors({
   origin: '*', // Allows all domains
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
+// Explicitly handle OPTIONS preflight requests for all routes
+app.options('*', cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
