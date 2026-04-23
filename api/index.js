@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const connectDB = require('../Backend/config/db');
 const orderRoutes = require('../Backend/routes/orderRoutes');
 const feedbackRoutes = require('../Backend/routes/feedbackRoutes');
@@ -18,10 +17,7 @@ app.options('*', cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Health Check
-app.get('/api/ping', (req, res) => res.json({ status: 'API is alive', time: new Date() }));
-
-// Connect to DB and then handle routes
+// DB connection middleware
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -36,14 +32,18 @@ app.use(async (req, res, next) => {
 });
 
 // Routes
-// Note: Vercel routes /api/index.js to /api
-// If the request is /api/orders, and we use app.use('/api/orders', ...)
-// Express will match it correctly because Vercel passes the full path.
+// We mount them at both /api/... and /... to be safe with Vercel rewrites
 app.use('/api/orders', orderRoutes);
+app.use('/orders', orderRoutes);
+
 app.use('/api/feedback', feedbackRoutes);
+app.use('/feedback', feedbackRoutes);
 
-// Root path for API
+// Health Checks
+app.get('/api/ping', (req, res) => res.json({ status: 'API is alive', time: new Date() }));
+app.get('/ping', (req, res) => res.json({ status: 'API is alive', time: new Date() }));
+
 app.get('/api', (req, res) => res.send('Drawing App API is running...'));
+app.get('/', (req, res) => res.send('Drawing App API is running...'));
 
-// Export for Vercel
 module.exports = app;
