@@ -13,9 +13,20 @@ dotenv.config();
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  'http://localhost:3000',
+  /\.vercel\.app$/ // Allows all Vercel subdomains
+];
+
 app.use(cors({
-  origin: '*', // For development. Change to your Vercel URL in production
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  origin: (origin, callback) => {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.some(o => typeof o === 'string' ? o === origin : o.test(origin))) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS Policy Error'), false);
+  },
   credentials: true
 }));
 
@@ -46,7 +57,9 @@ app.use('/uploads', express.static(uploadDir));
 
 // Routes
 app.use('/api/orders', orderRoutes);
+app.use('/orders', orderRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/feedback', feedbackRoutes);
 
 // Health checks
 app.get('/api/ping', (req, res) => res.json({ status: 'API is alive', time: new Date() }));
