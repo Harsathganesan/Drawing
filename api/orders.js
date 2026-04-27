@@ -1,7 +1,7 @@
 const connectDB = require('../Backend/config/db');
 const Order = require('../Backend/models/Order');
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   // 1. Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
