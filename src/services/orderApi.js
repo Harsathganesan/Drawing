@@ -4,7 +4,7 @@ import axios from 'axios';
 // Priority: 1. Environment Variable 2. Production URL 3. Localhost
 const API_URL =
   process.env.REACT_APP_API_URL ||
-  (window.location.hostname === 'localhost' ? 'https://drawing-blond.vercel.app/api/orders' : '/api');
+  (window.location.hostname === 'localhost' ? 'https://drawing-blond.vercel.app/api' : '/api');
 // Create axios instance
 const api = axios.create({
   baseURL: API_URL,

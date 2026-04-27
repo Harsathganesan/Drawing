@@ -43,7 +43,8 @@ module.exports = async (req, res) => {
       size, 
       quantity, 
       totalAmount, 
-      message 
+      message,
+      referenceImage 
     } = req.body;
 
     // 6. Detailed Validation
@@ -85,7 +86,8 @@ module.exports = async (req, res) => {
       price: totalAmount,    // Map to model field
       totalAmount,          // Optional backup
       description: message || '',
-      message               // Optional backup
+      message,              // Optional backup
+      referenceImage: referenceImage || ''
     };
 
     const newOrder = new Order(orderData);
