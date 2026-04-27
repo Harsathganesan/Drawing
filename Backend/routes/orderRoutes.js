@@ -74,29 +74,36 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Request body is empty' });
         }
 
-        // Map frontend fields to model fields
+        // Map frontend fields to model fields (Support both old and new naming)
         const orderData = {
-            customerName: req.body.customerName,
-            customerEmail: req.body.customerEmail,
-            customerPhone: req.body.customerPhone,
+            customerName: req.body.customerName || req.body.name,
+            customerEmail: req.body.customerEmail || req.body.email,
+            customerPhone: req.body.customerPhone || req.body.phone,
             drawingType: req.body.drawingType,
             size: req.body.size,
-            price: Number(req.body.price),
-            description: req.body.description || '',
+            price: Number(req.body.price || req.body.totalAmount),
+            description: req.body.description || req.body.message || '',
             specialInstructions: req.body.specialInstructions || '',
             paymentMethod: req.body.paymentMethod || 'online',
             referenceImage: req.body.referenceImage || ''
         };
+
+        // Also save new field names if they exist (for model compatibility)
+        orderData.email = req.body.email;
+        orderData.phone = req.body.phone;
+        orderData.totalAmount = Number(req.body.totalAmount);
+        orderData.message = req.body.message;
 
         console.log('Processing Order for:', orderData.customerName);
 
         // Validation - ensure required fields are present
         const requiredFields = ['customerName', 'customerEmail', 'customerPhone', 'drawingType', 'size', 'price'];
         for (const field of requiredFields) {
-            if (!orderData[field]) {
+            if (!orderData[field] && orderData[field] !== 0) {
                 return res.status(400).json({ 
                     success: false, 
-                    message: `Required field '${field}' is missing or empty.` 
+                    message: `Required field '${field}' is missing or empty.`,
+                    received: req.body 
                 });
             }
         }

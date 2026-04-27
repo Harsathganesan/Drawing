@@ -30,6 +30,11 @@ module.exports = async (req, res) => {
     await connectDB();
 
     // 5. Extract data from request body
+    console.log('--- NEW REQUEST ---');
+    console.log('Method:', req.method);
+    console.log('Headers:', req.headers['content-type']);
+    console.log('Raw Body:', req.body);
+
     const { 
       customerName, 
       email, 
@@ -41,11 +46,29 @@ module.exports = async (req, res) => {
       message 
     } = req.body;
 
-    // 6. Basic Validation
-    if (!customerName || !email || !phone || !drawingType || !size || !totalAmount) {
+    // 6. Detailed Validation
+    const missingFields = [];
+    if (!customerName) missingFields.push('customerName');
+    if (!email) missingFields.push('email');
+    if (!phone) missingFields.push('phone');
+    if (!drawingType) missingFields.push('drawingType');
+    if (!size) missingFields.push('size');
+    if (!totalAmount && totalAmount !== 0) missingFields.push('totalAmount');
+
+    if (missingFields.length > 0) {
+      console.error('❌ VALIDATION FAILED. Missing:', missingFields);
       return res.status(400).json({ 
         success: false, 
-        message: 'Missing required fields' 
+        message: 'Validation Failed',
+        missing: missingFields,
+        received: { 
+          hasName: !!customerName,
+          hasEmail: !!email,
+          hasPhone: !!phone,
+          hasType: !!drawingType,
+          hasSize: !!size,
+          hasAmount: !!totalAmount
+        }
       });
     }
 
