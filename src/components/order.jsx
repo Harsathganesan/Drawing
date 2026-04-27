@@ -101,17 +101,17 @@ const Order = () => {
 
       const totalAmount = calculateTotal();
 
-      // Prepare order data for MongoDB
+      // Prepare order data for Serverless API
       const orderData = {
         customerName: formData.name,
-        customerEmail: formData.email,
-        customerPhone: formData.phone.replace(/\D/g, ''), // Remove non-digits
+        email: formData.email,
+        phone: formData.phone.replace(/\D/g, ''),
         drawingType: formData.drawingType,
         size: formData.size,
-        price: totalAmount,
+        quantity: 1, 
+        totalAmount: totalAmount,
+        message: formData.description || '',
         referenceImage: imageUrl || '',
-        description: '',
-        specialInstructions: '',
         paymentMethod: 'online'
       };
 

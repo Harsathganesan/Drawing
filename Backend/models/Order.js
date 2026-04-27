@@ -16,11 +16,13 @@ const OrderSchema = new mongoose.Schema({
         lowercase: true,
         match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please enter a valid email address']
     },
+    email: { type: String }, // Alias/backup for serverless req
     customerPhone: {
         type: String,
         required: [true, 'Phone number is required'],
         trim: true
     },
+    phone: { type: String }, // Alias/backup for serverless req
 
     // Order Details
     drawingType: {
@@ -31,16 +33,24 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Size is required']
     },
+    quantity: {
+        type: Number,
+        default: 1
+    },
     price: {
         type: Number,
-        required: [true, 'Price is required'],
         min: [0, 'Price cannot be negative']
+    },
+    totalAmount: {
+        type: Number,
+        min: [0, 'Total amount cannot be negative']
     },
     description: {
         type: String,
         maxlength: [1000, 'Description cannot exceed 1000 characters'],
         default: ''
     },
+    message: { type: String }, // Alias for description
     referenceImage: {
         type: String, // URL to uploaded image
         default: null
@@ -53,7 +63,7 @@ const OrderSchema = new mongoose.Schema({
         default: ''
     },
 
-    // Payment Information (Removed status field, kept only payment related)
+    // Payment Information
     paymentMethod: {
         type: String,
         enum: ['cash', 'card', 'online', 'bank_transfer'],
