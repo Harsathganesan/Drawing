@@ -1,6 +1,7 @@
 node_modules
-build
-.env
+frontend/node_modules
+frontend/build
+frontend/.env
 Backend/.env
 Backend/uploads/*
 !Backend/uploads/.gitkeep
