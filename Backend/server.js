@@ -8,29 +8,23 @@ const orderRoutes = require('./routes/orderRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
 
 // Load env vars
-// Load env vars (Safe check for Vercel where .env is not present)
-if (fs.existsSync(path.join(__dirname, '.env'))) {
-  dotenv.config({ path: path.join(__dirname, '.env') });
-}
+dotenv.config();
 
 const app = express();
 
-// Middleware (Must be before any routes or DB connection)
+// Middleware
 app.use(cors({
-  origin: '*', // Allows all domains
+  origin: '*', // For development. Change to your Vercel URL in production
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
-// Explicitly handle OPTIONS preflight requests for all routes
+
 app.options('*', cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Connect to database lazily through a middleware
+// Database connection middleware
 app.use(async (req, res, next) => {
-  // Skip DB connection for health checks if needed, but here we want to ensure it works
-  if (req.path === '/api/ping') return next();
-  
   try {
     await connectDB();
     next();
@@ -38,30 +32,35 @@ app.use(async (req, res, next) => {
     console.error('DB Connection Failed:', error.message);
     res.status(500).json({ 
       success: false, 
-      message: 'Database Connection Error. Please verify MONGODB_URI on Vercel Dashboard.',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+      message: 'Database Connection Error. Please verify MONGODB_URI.'
     });
   }
 });
 
-// Serve static files from uploads folder (Handle /tmp for Vercel)
-const uploadDir = process.env.VERCEL 
-  ? path.join('/tmp', 'uploads') 
-  : path.join(__dirname, 'uploads');
+// Serve static files
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 app.use('/uploads', express.static(uploadDir));
 
 // Routes
 app.use('/api/orders', orderRoutes);
 app.use('/api/feedback', feedbackRoutes);
 
-// Health check routes
+// Health checks
 app.get('/api/ping', (req, res) => res.json({ status: 'API is alive', time: new Date() }));
-app.get('/', (req, res) => res.send('API is running... Use /api/orders or /api/feedback'));
+app.get('/', (req, res) => res.send('Drawing App Backend is running...'));
 
-if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
-  const PORT = process.env.PORT || 5001;
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-  });
-}
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ success: false, message: 'Internal Server Error' });
+});
+
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
+
 module.exports = app;

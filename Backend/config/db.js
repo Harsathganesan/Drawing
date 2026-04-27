@@ -11,10 +11,10 @@ const connectDB = async () => {
     return cached.conn;
   }
 
-  const uri = process.env.MONGODB_URI || "mongodb+srv://harsath137_db_user:Harsath%402005@cluster0.oxcog9w.mongodb.net/Drawing?appName=Cluster0";
+  const uri = process.env.MONGODB_URI;
   if (!uri) {
-    console.error('❌ MONGODB_URI is not defined in Vercel/Environment');
-    throw new Error('MONGODB_URI missing. Please add it to your Vercel Project Settings > Environment Variables.');
+    console.error('❌ MONGODB_URI is not defined in environment variables!');
+    throw new Error('MONGODB_URI missing. Please add it to your environment variables.');
   }
 
   
