@@ -5,8 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "npm install",
     "dev": "nodemon server.js",
     "test-connection": "node -e \"require('mongoose').connect(process.env.MONGODB_URI).then(()=>console.log('✅ Connection test passed')).catch(err=>console.error('❌ Connection test failed:',err.message))\""
+  },
+  "engines": {
+    "node": ">=18.x"
   },
   "keywords": [
     "mongodb",
