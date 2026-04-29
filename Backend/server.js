@@ -74,6 +74,17 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
+  
+  // Keep-alive mechanism to prevent Render from sleeping
+  const RENDER_URL = process.env.RENDER_URL || 'https://drawing-8587.onrender.com/api/ping';
+  setInterval(() => {
+    const https = require('https');
+    https.get(RENDER_URL, (res) => {
+      console.log(`Keep-alive ping sent to ${RENDER_URL}. Status: ${res.statusCode}`);
+    }).on('error', (err) => {
+      console.error(`Keep-alive ping failed: ${err.message}`);
+    });
+  }, 5 * 60 * 1000); // 5 minutes
 });
 
 module.exports = app;
