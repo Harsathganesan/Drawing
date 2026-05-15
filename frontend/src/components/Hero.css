@@ -3,7 +3,9 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(to right, #9333ea, #ec4899, #f97316);
+  background: linear-gradient(-45deg, #9333ea, #ec4899, #f97316, #2563eb);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
 }
 
 .hero-container {

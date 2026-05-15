@@ -26,9 +26,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
   text-shadow: 0 0 20px rgba(147,51,234,0.2);
 }
 
@@ -36,11 +34,12 @@
   content: '';
   position: absolute;
   bottom: -10px;
-  left: 10%;
-  width: 80%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #9333ea, #ec4899, #f97316, transparent);
-  border-radius: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #9333ea, #ec4899, #f97316);
+  border-radius: 4px;
 }
 @media (min-width: 768px) {
   .about-title {
