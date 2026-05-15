@@ -4,7 +4,7 @@ const Order = require('../models/Order');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { storage } = require('../config/cloudinary');
+const { storage, isCloudinaryConfigured } = require('../config/cloudinary');
 const router = express.Router();
 
 const upload = multer({ 
@@ -14,7 +14,15 @@ const upload = multer({
 
 // ===== UPLOAD IMAGE =====
 // POST /api/orders/upload
-router.post('/upload', upload.single('photo'), (req, res) => {
+router.post('/upload', (req, res, next) => {
+    if (!isCloudinaryConfigured) {
+        return res.status(503).json({
+            success: false,
+            message: 'Cloudinary is not configured. Please add CLOUD_NAME, API_KEY, and API_SECRET to your environment variables.'
+        });
+    }
+    next();
+}, upload.single('photo'), (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ success: false, message: 'No file uploaded' });
