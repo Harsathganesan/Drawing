@@ -15,16 +15,25 @@ const app = express();
 // Middleware
 const allowedOrigins = [
   'http://localhost:3000',
+  'http://localhost:3001',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:3001',
   /\.vercel\.app$/ // Allows all Vercel subdomains
 ];
 
 app.use(cors({
   origin: (origin, callback) => {
-    // allow requests with no origin (like mobile apps or curl requests)
+    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.some(o => typeof o === 'string' ? o === origin : o.test(origin))) {
+    
+    const isAllowed = allowedOrigins.some(o => 
+      typeof o === 'string' ? o === origin : o.test(origin)
+    );
+
+    if (isAllowed || process.env.NODE_ENV !== 'production') {
       return callback(null, true);
     }
+    
     return callback(new Error('CORS Policy Error'), false);
   },
   credentials: true
