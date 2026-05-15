@@ -308,8 +308,9 @@ const Order = () => {
                       className="file-input"
                       disabled={loading}
                     />
+                    <FaImage className="file-upload-icon" />
                     <div className="file-upload-text">
-                      Click to upload photo
+                      {formData.referenceImage ? 'Change Photo' : 'Upload Reference Photo'}
                     </div>
                     <small className="file-hint">JPG, PNG (Max 5MB)</small>
                   </div>

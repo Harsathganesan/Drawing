@@ -8,7 +8,7 @@ const orderRoutes = require('./routes/orderRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
 
 // Load env vars
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 

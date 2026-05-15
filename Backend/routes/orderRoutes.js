@@ -60,31 +60,37 @@ router.post('/', async (req, res) => {
             customerPhone: req.body.customerPhone || req.body.phone,
             drawingType: req.body.drawingType,
             size: req.body.size,
-            price: Number(req.body.price || req.body.totalAmount),
+            quantity: parseInt(req.body.quantity) || 1,
+            price: Number(req.body.price || req.body.totalAmount || 0),
+            totalAmount: Number(req.body.totalAmount || req.body.price || 0),
             description: req.body.description || req.body.message || '',
             specialInstructions: req.body.specialInstructions || '',
             paymentMethod: req.body.paymentMethod || 'online',
-            referenceImage: req.body.referenceImage || ''
+            referenceImage: req.body.referenceImage || '',
+            // Backup fields for model compatibility
+            email: req.body.email || req.body.customerEmail,
+            phone: req.body.phone || req.body.customerPhone,
+            message: req.body.message || req.body.description
         };
-
-        // Also save new field names if they exist (for model compatibility)
-        orderData.email = req.body.email;
-        orderData.phone = req.body.phone;
-        orderData.totalAmount = Number(req.body.totalAmount);
-        orderData.message = req.body.message;
 
         console.log('Processing Order for:', orderData.customerName);
 
         // Validation - ensure required fields are present
-        const requiredFields = ['customerName', 'customerEmail', 'customerPhone', 'drawingType', 'size', 'price'];
+        const requiredFields = ['customerName', 'customerEmail', 'customerPhone', 'drawingType', 'size'];
+        const missingFields = [];
         for (const field of requiredFields) {
-            if (!orderData[field] && orderData[field] !== 0) {
-                return res.status(400).json({ 
-                    success: false, 
-                    message: `Required field '${field}' is missing or empty.`,
-                    received: req.body 
-                });
+            if (!orderData[field]) {
+                missingFields.push(field);
             }
+        }
+
+        if (missingFields.length > 0) {
+            console.error('❌ Missing required fields:', missingFields);
+            return res.status(400).json({ 
+                success: false, 
+                message: `Required fields are missing: ${missingFields.join(', ')}`,
+                received: req.body 
+            });
         }
 
         // Create and save to MongoDB
@@ -101,7 +107,8 @@ router.post('/', async (req, res) => {
         });
 
     } catch (error) {
-        const errorLog = `[${new Date().toISOString()}] CREATE ORDER ERROR: ${error.message}\n${error.stack}\n\n`;
+        // Log the actual error to the console and a file for debugging
+        const errorLog = `[${new Date().toISOString()}] ORDER SAVE FAILED: ${error.message}\n${error.stack}\n\n`;
         fs.appendFileSync(path.join(__dirname, '..', 'error.log'), errorLog);
         
         console.error('❌ CRITICAL ORDER SAVE ERROR:', error);
@@ -117,7 +124,7 @@ router.post('/', async (req, res) => {
 
         res.status(500).json({ 
             success: false, 
-            message: "Error saving order", 
+            message: "Internal Server Error during order saving", 
             error: error.message 
         });
     }

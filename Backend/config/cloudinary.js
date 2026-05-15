@@ -1,8 +1,10 @@
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const dotenv = require('dotenv');
+const path = require('path');
 
-dotenv.config();
+// Explicitly load .env from the Backend directory
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,

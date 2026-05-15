@@ -52,6 +52,7 @@ app.use(async (req, res, next) => {
 app.use('/api/orders', orderRoutes);
 app.use('/orders', orderRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/feedbacks', feedbackRoutes); // Added for admin compatibility
 app.use('/feedback', feedbackRoutes);
 
 // Health Checks
