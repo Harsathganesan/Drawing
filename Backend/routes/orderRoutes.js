@@ -128,32 +128,19 @@ router.get('/', async (req, res) => {
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
 
-        // Get orders with pagination (status filter removed)
+        // Get orders (status filter removed)
         const orders = await Order.find()
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit)
             .select('-__v'); // Exclude version field
 
-        // Get total count for pagination
-        const total = await Order.countDocuments();
-
-        res.json({
-            success: true,
-            page: page,
-            totalPages: Math.ceil(total / limit),
-            totalOrders: total,
-            count: orders.length,
-            orders: orders
-        });
+        // Return array directly for Admin Panel compatibility
+        res.status(200).json(orders);
 
     } catch (error) {
         console.error('Error fetching orders:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Failed to fetch orders',
-            error: error.message
-        });
+        res.status(500).json([]); // Return empty array on error for admin stability
     }
 });
 

@@ -41,22 +41,15 @@ router.post('/', async (req, res) => {
 });
 
 // @route   GET api/feedback
-// @desc    Get all feedback (optional, for admin)
-// @access  Private/Admin (for now keeping it simple)
+// @desc    Get all feedback
 router.get('/', async (req, res) => {
   try {
     const feedbacks = await Feedback.find().sort({ createdAt: -1 });
-    res.json({
-      success: true,
-      count: feedbacks.length,
-      data: feedbacks
-    });
+    // Return array directly for Admin Panel compatibility
+    res.status(200).json(feedbacks);
   } catch (error) {
     console.error('Fetch Feedback Error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Server Error'
-    });
+    res.status(500).json([]); // Return empty array on error
   }
 });
 

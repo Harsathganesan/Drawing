@@ -59,6 +59,7 @@ app.use('/uploads', express.static(uploadDir));
 app.use('/api/orders', orderRoutes);
 app.use('/orders', orderRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/feedbacks', feedbackRoutes); // Added plural for admin compatibility
 app.use('/feedback', feedbackRoutes);
 
 // Health checks
