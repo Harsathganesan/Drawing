@@ -101,10 +101,11 @@ router.post('/', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('❌ CRITICAL ORDER SAVE ERROR:', error);
-        console.log(error); // As requested
+        const errorLog = `[${new Date().toISOString()}] CREATE ORDER ERROR: ${error.message}\n${error.stack}\n\n`;
+        fs.appendFileSync(path.join(__dirname, '..', 'error.log'), errorLog);
         
-        // Detailed validation error handling
+        console.error('❌ CRITICAL ORDER SAVE ERROR:', error);
+        
         if (error.name === 'ValidationError') {
             const messages = Object.values(error.errors).map(err => err.message);
             return res.status(400).json({
@@ -114,8 +115,11 @@ router.post('/', async (req, res) => {
             });
         }
 
-        // Database connection or other server error
-        res.status(500).json({ message: "Error saving order" });
+        res.status(500).json({ 
+            success: false, 
+            message: "Error saving order", 
+            error: error.message 
+        });
     }
 });
 

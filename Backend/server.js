@@ -68,8 +68,10 @@ app.get('/', (req, res) => res.send('Drawing App Backend is running...'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
+  const errorLog = `[${new Date().toISOString()}] ${req.method} ${req.url}\n${err.stack}\n\n`;
+  fs.appendFileSync(path.join(__dirname, 'error.log'), errorLog);
   console.error(err.stack);
-  res.status(500).json({ success: false, message: 'Internal Server Error' });
+  res.status(500).json({ success: false, message: 'Internal Server Error', error: err.message });
 });
 
 const PORT = process.env.PORT || 5001;
