@@ -4,26 +4,8 @@ const Order = require('../models/Order');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { storage } = require('../config/cloudinary');
 const router = express.Router();
-
-// Ensure uploads directory exists (Use /tmp for Vercel, as project dir is read-only)
-const uploadDir = process.env.VERCEL 
-    ? path.join('/tmp', 'uploads') 
-    : path.join(__dirname, '..', 'uploads');
-
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Configure Multer storage
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadDir);
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '_'));
-    }
-});
 
 const upload = multer({ 
     storage: storage,
@@ -32,20 +14,17 @@ const upload = multer({
 
 // ===== UPLOAD IMAGE =====
 // POST /api/orders/upload
-router.post('/upload', upload.single('image'), (req, res) => {
+router.post('/upload', upload.single('photo'), (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ success: false, message: 'No file uploaded' });
         }
         
-        // Return the full URL for the image
-        const protocol = req.headers['x-forwarded-proto'] || 'http';
-        const imageUrl = `${protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-        
+        // Return the Cloudinary URL
         res.status(200).json({
             success: true,
             data: {
-                url: imageUrl,
+                url: req.file.path, // Cloudinary URL is in req.file.path
                 filename: req.file.filename
             }
         });

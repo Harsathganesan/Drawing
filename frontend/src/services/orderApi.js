@@ -74,19 +74,23 @@ export const orderApi = {
     });
   },
 
-  // Upload reference image
+  // Upload reference image to Cloudinary via backend
   uploadImage: async (file) => {
-    // VERCEL FIX: Instead of uploading to an ephemeral /tmp folder which gets deleted,
-    // we convert the image to Base64 so it can be stored directly inside MongoDB.
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve({ data: { url: reader.result } });
-      reader.onerror = (error) => {
-        console.warn('Image to Base64 failed, using local blob:', error);
-        resolve({ data: { url: URL.createObjectURL(file) } });
-      };
-    });
+    try {
+      const formData = new FormData();
+      formData.append('photo', file);
+
+      const response = await api.post('/orders/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error('Image upload failed:', error);
+      throw error;
+    }
   },
 
   // Submit contact/feedback form
