@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaUser, FaEnvelope, FaComment, FaInstagram, FaWhatsapp, FaMapMarkerAlt, FaSpinner } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaInstagram, FaWhatsapp, FaYoutube, FaSpinner } from 'react-icons/fa';
 import orderApi from '../services/orderApi';
 import './Contact.css';
 
@@ -7,6 +7,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: ''
   });
   const [loading, setLoading] = useState(false);
@@ -26,22 +27,11 @@ const Contact = () => {
 
     try {
       await orderApi.submitFeedback(formData);
-      setStatus({ type: 'success', message: '✅ Message sent successfully! I will reply within 24 hours.' });
-      setFormData({ name: '', email: '', message: '' });
+      setStatus({ type: 'success', message: 'Message sent successfully!' });
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
       console.error('Contact form error:', err);
-
-      let errorMsg = 'Failed to send message. Please try again.';
-
-      if (err.code === 'NETWORK_ERROR') {
-        errorMsg = '⚠️ Network error: Backend server-உடன் connect ஆகவில்லை. Please try again later.';
-      } else if (err.code === 'TIMEOUT') {
-        errorMsg = '⏱️ Request timeout. Please check your connection and try again.';
-      } else if (err.message) {
-        errorMsg = err.message;
-      }
-
-      setStatus({ type: 'error', message: errorMsg });
+      setStatus({ type: 'error', message: 'Failed to send message.' });
     } finally {
       setLoading(false);
     }
@@ -50,131 +40,86 @@ const Contact = () => {
   return (
     <section id="contact" className="contact-section">
       <div className="contact-container">
-        <h2 className="contact-title">Contact Us</h2>
-        <div className="contact-wrapper">
-          <div className="contact-info">
-            <h3 className="info-title">Get in Touch</h3>
-            <p className="info-text">
-              Have a portrait idea? Let's bring it to life! 
-              Fill out the form and I'll get back to you within 24 hours.
-            </p>
-            
-            <div className="info-details">
-              <div className="info-item">
-                <div className="info-icon">
-                  <FaMapMarkerAlt />
-                </div>
-                <div>
-                  <h4>Location</h4>
-                  <p>Pudukottai, Tamil Nadu</p>
-                </div>
+        <div className="contact-layout">
+          {/* Left Side: Contact Info */}
+          <div className="contact-info-panel reveal reveal-up">
+            <span className="section-tag">GET IN TOUCH</span>
+            <h2 className="contact-title">Contact Me</h2>
+            <div className="title-underline"></div>
+
+            <div className="contact-methods">
+              <div className="method-item">
+                <div className="method-icon"><FaPhone /></div>
+                <div className="method-text">+91 63822 45266</div>
               </div>
-              
-              <div className="info-item">
-                <div className="info-icon">
-                  <FaEnvelope />
-                </div>
-                <div>
-                  <h4>Email</h4>
-                  <p>harsatharts2005@gmail.com</p>
-                </div>
+              <div className="method-item">
+                <div className="method-icon"><FaEnvelope /></div>
+                <div className="method-text">harsatharts2005@gmail.com</div>
               </div>
-              
-              <div className="info-item">
-                <div className="info-icon">
-                  <FaWhatsapp />
-                </div>
-                <div>
-                  <h4>WhatsApp</h4>
-                  <p>+91 6382245266</p>
-                </div>
-              </div>
-              
-              <div className="info-item">
-                <div className="info-icon">
-                  <FaInstagram />
-                </div>
-                <div>
-                  <h4>Instagram</h4>
-                  <p>@harsatharts9</p>
-                </div>
+              <div className="method-item">
+                <div className="method-icon"><FaMapMarkerAlt /></div>
+                <div className="method-text">Pudukottai, Tamil Nadu, India</div>
               </div>
             </div>
 
+            <div className="social-follow">
+              <h4>Follow Me</h4>
+              <div className="social-grid">
+                <a href="https://instagram.com/harsatharts9" target="_blank" rel="noopener noreferrer" className="social-btn instagram"><FaInstagram /></a>
+                <a href="https://wa.me/919047023266" target="_blank" rel="noopener noreferrer" className="social-btn whatsapp"><FaWhatsapp /></a>
+                <a href="https://youtube.com/@harsatharts928" target="_blank" rel="noopener noreferrer" className="social-btn youtube"><FaYoutube /></a>
+              </div>
+            </div>
           </div>
 
-          <div className="contact-form-wrapper">
-            {status.message && (
-              <div className={`status-message ${status.type}`}>
-                {status.type === 'success' ? '✅' : '❌'} {status.message}
-              </div>
-            )}
-            
+          {/* Right Side: Contact Form */}
+          <div className="contact-form-panel reveal reveal-up">
+            <div className="dots-decoration"></div>
             <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label className="form-label">
-                  <FaUser className="form-icon" />
-                  Your Name
-                </label>
+              <div className="form-row">
                 <input
                   type="text"
                   name="name"
+                  placeholder="Your Name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="form-input"
-                  placeholder="Your Name"
                   required
-                  disabled={loading}
                 />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">
-                  <FaEnvelope className="form-icon" />
-                  Email Address
-                </label>
                 <input
                   type="email"
                   name="email"
+                  placeholder="Your Email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="form-input"
-                  placeholder="@example.com"
                   required
-                  disabled={loading}
                 />
               </div>
-
-              <div className="form-group">
-                <label className="form-label">
-                  <FaComment className="form-icon" />
-                  Your Message
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows="5"
-                  className="form-textarea"
-                  placeholder="Tell me about your portrait idea... Size, style, reference photos etc."
-                  required
-                  disabled={loading}
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="submit-btn"
-                disabled={loading}
-              >
-                {loading ? (
-                  <>
-                    <FaSpinner className="spinner" /> Sending...
-                  </>
-                ) : (
-                  'Send Message'
-                )}
+              <input
+                type="text"
+                name="subject"
+                placeholder="Subject"
+                value={formData.subject}
+                onChange={handleChange}
+                required
+              />
+              <textarea
+                name="message"
+                placeholder="Your Message"
+                rows="6"
+                value={formData.message}
+                onChange={handleChange}
+                required
+              ></textarea>
+              
+              <button type="submit" className="send-btn" disabled={loading}>
+                {loading ? <FaSpinner className="spinner" /> : <><FaPaperPlane /> Send Message</>}
               </button>
+
+              {status.message && (
+                <div className={`status-msg ${status.type}`}>
+                  {status.message}
+                </div>
+              )}
             </form>
           </div>
         </div>

@@ -70,10 +70,17 @@ const Gallery = () => {
   return (
     <section id="gallery" className="gallery-section">
       <div className="gallery-container">
-        <h2 className="gallery-title">Gallery</h2>
+        <div className="gallery-header reveal reveal-up">
+          <span className="section-tag">EXPLORE MY WORK</span>
+          <h2 className="gallery-title">Gallery</h2>
+          <div className="title-underline"></div>
+        </div>
+
+        <div className="dots-decoration"></div>
+
         <div className="gallery-grid">
           {artworks.map((artwork) => (
-            <div key={artwork.id} className="gallery-item">
+            <div key={artwork.id} className="gallery-item reveal reveal-scale">
               <div className="gallery-image-wrapper">
                 <img
                   src={artwork.image}

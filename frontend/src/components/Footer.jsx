@@ -7,9 +7,9 @@ const Footer = () => {
         <div className="text-center">
           <p className="mb-4">© 2026 harsatharts9. All rights reserved.</p>
           <div className="flex justify-center space-x-4">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">Instagram</a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">Facebook</a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">Twitter</a>
+            <a href="https://instagram.com/harsatharts9" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">Instagram</a>
+            <a href="https://wa.me/919047023266" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">WhatsApp</a>
+            <a href="https://youtube.com/@harsatharts928" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">YouTube</a>
           </div>
         </div>
       </div>

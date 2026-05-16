@@ -1,73 +1,78 @@
 import React from 'react';
-import aboutImage from '../assets/images/aa.jpeg';
-import { FaInstagram, FaWhatsapp, FaYoutube } from 'react-icons/fa';
+import { FaInstagram, FaWhatsapp, FaYoutube, FaPalette, FaUserEdit, FaAward } from 'react-icons/fa';
 import './About.css';
 
 const About = () => {
   return (
     <section id="about" className="about-section">
       <div className="about-container">
-        <h2 className="about-title">
-          About Me
-        </h2>
+        <div className="about-header reveal reveal-up">
+          <span className="section-tag">Meet the Artist</span>
+          <h2 className="about-title">About Harsath Arts</h2>
+          <div className="title-underline"></div>
+        </div>
+
         <div className="about-content">
-          <div className="about-image-wrapper">
-            <div className="about-image-container">
+          <div className="about-visual reveal reveal-left">
+            <div className="profile-frame">
               <img
-                src={aboutImage}
+                src="/mypic.jpeg"
                 alt="Harsath Artist"
-                className="about-image"
+                className="profile-image"
               />
-              <div className="image-border"></div>
+              <div className="frame-decoration"></div>
+            </div>
+            <div className="experience-badge">
+              <span className="exp-num">8+</span>
+              <span className="exp-text">Years of Mastery</span>
             </div>
           </div>
-          <div className="about-text-wrapper">
-            <p className="about-text">
-              I am <strong>Harsath</strong>, a passionate pencil artist dedicated to creating beautiful and meaningful artworks. With years of experience in pencil sketching, I specialize in creating customized portraits that capture the essence of your loved ones.
+
+          <div className="about-details reveal reveal-right">
+            <h3 className="details-greeting">Hello, I'm <span className="highlight-name">Harsath</span></h3>
+            <p className="details-description">
+              A passionate pencil artist dedicated to breathing life into paper. With over 8 years of professional experience, I specialize in hyper-realistic pencil sketches and customized portraits that capture not just faces, but souls.
             </p>
-            <p className="about-text">
-              Each artwork is carefully crafted with attention to detail, ensuring that every piece tells a unique story. My goal is to bring smiles to people's faces through my art.
+            <p className="details-description">
+              Every stroke of my pencil tells a unique story. My goal is to transform your precious memories into timeless masterpieces that you can cherish forever.
             </p>
 
-            <div className="about-stats">
-              <div className="stat-item">
-                <div className="stat-number">500+</div>
-                <div className="stat-label">Artworks</div>
+            <div className="features-grid">
+              <div className="feature-item">
+                <div className="feature-icon"><FaUserEdit /></div>
+                <div className="feature-text">
+                  <h4>Custom Portraits</h4>
+                  <p>Hand-drawn with precision</p>
+                </div>
               </div>
-              <div className="stat-item">
-                <div className="stat-number">8+</div>
-                <div className="stat-label">Years Exp</div>
+              <div className="feature-item">
+                <div className="feature-icon"><FaPalette /></div>
+                <div className="feature-text">
+                  <h4>Artistic Vision</h4>
+                  <p>Capturing every detail</p>
+                </div>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon"><FaAward /></div>
+                <div className="feature-text">
+                  <h4>Quality Guarantee</h4>
+                  <p>Premium materials used</p>
+                </div>
               </div>
             </div>
 
-            <div className="social-links">
-              <a
-                href="https://instagram.com/harsatharts9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link instagram"
-                aria-label="Instagram"
-              >
-                <FaInstagram size={22} />
-              </a>
-              <a
-                href="https://wa.me/1234567890"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link whatsapp"
-                aria-label="WhatsApp"
-              >
-                <FaWhatsapp size={22} />
-              </a>
-              <a
-                href="https://youtube.com/@harsatharts9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link youtube"
-                aria-label="YouTube"
-              >
-                <FaYoutube size={22} />
-              </a>
+            <div className="about-actions">
+              <div className="about-socials">
+                <a href="https://instagram.com/harsatharts9" target="_blank" rel="noopener noreferrer" className="about-social-link instagram">
+                  <FaInstagram />
+                </a>
+                <a href="https://wa.me/919047023266" target="_blank" rel="noopener noreferrer" className="about-social-link whatsapp">
+                  <FaWhatsapp />
+                </a>
+                <a href="https://youtube.com/@harsatharts928" target="_blank" rel="noopener noreferrer" className="about-social-link youtube">
+                  <FaYoutube />
+                </a>
+              </div>
             </div>
           </div>
         </div>

@@ -1,52 +1,116 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { FaHome } from 'react-icons/fa';
 import './Navbar.css';
 
 const Navbar = () => {
+  const [activeLink, setActiveLink] = useState('Home');
+  const location = useLocation();
+  const isOrderPage = location.pathname === '/order';
+
+  useEffect(() => {
+    if (isOrderPage) {
+      setActiveLink('Order');
+    }
+  }, [isOrderPage]);
+
   const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleNavClick = (name) => {
+    setActiveLink(name);
+    setIsOpen(false);
+  };
+
+  const navItems = [
+    { name: 'Home', path: '#home', icon: <FaHome className="home-icon" />, className: 'nav-home' },
+    { name: 'About', path: '#about', className: 'nav-about' },
+    { name: 'Services', path: '#services', className: 'nav-services' },
+    { name: 'Gallery', path: '#gallery', className: 'nav-gallery' },
+    { name: 'Contact Us', path: '#contact', className: 'nav-contact' }
+  ];
+
+  const themeColors = {
+    'Home': '#ef4444',
+    'About': '#3b82f6',
+    'Services': '#10b981',
+    'Gallery': '#8b5cf6',
+    'Contact Us': '#0d9488',
+    'Order': '#f43f5e'
+  };
 
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <div className="nav-content">
-          {/* Logo Text Only */}
-          <div className="logo">
-            <span className="logo-text">🎨harsatharts9</span>
+        <Link to="/" className="logo-group" onClick={() => handleNavClick('Home')}>
+          <div className="logo-text-wrapper">
+            <h1 className="logo-name">harsatharts9</h1>
+            <span className="logo-tagline">Bringing Imagination to Life</span>
           </div>
+        </Link>
 
-          {/* Desktop Menu */}
-          <div className="desktop-menu">
-            <a href="#home" className="nav-link">Home</a>
-            <a href="#about" className="nav-link">About</a>
-            <a href="#services" className="nav-link">Services</a>
-            <a href="#gallery" className="nav-link">Gallery</a>
-            <a href="#contact" className="nav-link">Contact</a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="mobile-menu-btn"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+        <div className="hamburger" onClick={toggleMenu}>
+          <div className={`bar ${isOpen ? 'animate' : ''}`}></div>
+          <div className={`bar ${isOpen ? 'animate' : ''}`}></div>
+          <div className={`bar ${isOpen ? 'animate' : ''}`}></div>
         </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="mobile-menu">
-            <a href="#home" className="mobile-link">Home</a>
-            <a href="#about" className="mobile-link">About</a>
-            <a href="#services" className="mobile-link">Services</a>
-            <a href="#gallery" className="mobile-link">Gallery</a>
-            <a href="#contact" className="mobile-link">Contact</a>
-          </div>
-        )}
+        <div className={`nav-links ${isOpen ? 'mobile-active' : ''}`}>
+          {navItems.map((item) => (
+            item.path.startsWith('#') ? (
+              <a
+                key={item.name}
+                href={item.path}
+                className={`nav-link ${item.className} ${activeLink === item.name ? 'active' : ''}`}
+                style={{ color: activeLink === item.name ? themeColors[item.name] : '' }}
+                onClick={() => handleNavClick(item.name)}
+              >
+                {item.icon && item.icon} {item.name}
+                {activeLink === item.name && (
+                  <div 
+                    className="active-indicator" 
+                    style={{ background: themeColors[item.name] }}
+                  ></div>
+                )}
+              </a>
+            ) : (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`nav-link ${item.className} ${activeLink === item.name ? 'active' : ''}`}
+                style={{ color: activeLink === item.name ? themeColors[item.name] : '' }}
+                onClick={() => handleNavClick(item.name)}
+              >
+                {item.icon && item.icon} {item.name}
+                {activeLink === item.name && (
+                  <div 
+                    className="active-indicator" 
+                    style={{ background: themeColors[item.name] }}
+                  ></div>
+                )}
+              </Link>
+            )
+          ))}
+          
+          <Link 
+            to="/order" 
+            className="mobile-only mobile-order-btn"
+            onClick={() => setIsOpen(false)}
+          >
+            Place Your Order
+          </Link>
+        </div>
+
+        <Link
+          to="/order"
+          className="place-order-btn desktop-only"
+          style={{ background: themeColors[activeLink] || '#f43f5e' }}
+        >
+          Place Your Order
+        </Link>
       </div>
     </nav>
   );
