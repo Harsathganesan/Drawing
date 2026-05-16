@@ -155,12 +155,12 @@ const Order = () => {
                     <input
                       type="tel"
                       name="phone"
-                      placeholder="9876543210"
+                      placeholder="Your phone number"
                       value={formData.phone}
                       onChange={handleChange}
                       required
                     />
-                    <span className="field-hint">Enter 10-digit mobile number</span>
+                    <span className="field-hint">Enter your mobile number</span>
                   </div>
                 </div>
 
