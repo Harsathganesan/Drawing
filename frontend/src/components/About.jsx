@@ -16,7 +16,7 @@ const About = () => {
           <div className="about-visual reveal reveal-left">
             <div className="profile-frame">
               <img
-                src="/mypic.jpeg"
+                src="/my.jpeg"
                 alt="Harsath Artist"
                 className="profile-image"
               />

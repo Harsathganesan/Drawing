@@ -21,28 +21,13 @@ const Gallery = () => {
 
     },
     {
-      id: 2,
-      image: artwork2,
-
-    },
-    {
-      id: 3,
-      image: artwork3,
-
-    },
-    {
-      id: 4,
-      image: artwork4,
-
-    },
-    {
-      id: 5,
-      image: artwork5,
-
-    },
-    {
       id: 6,
       image: artwork6,
+
+    },
+    {
+      id: 2,
+      image: artwork2,
 
     },
     {
@@ -51,13 +36,28 @@ const Gallery = () => {
 
     },
     {
+      id: 3,
+      image: artwork3,
+
+    },
+    {
       id: 8,
       image: artwork8,
 
     },
     {
+      id: 4,
+      image: artwork4,
+
+    },
+    {
       id: 9,
       image: artwork9,
+
+    },
+    {
+      id: 5,
+      image: artwork5,
 
     },
     {
