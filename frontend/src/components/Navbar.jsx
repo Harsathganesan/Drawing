@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 import './Navbar.css';
+import logoImg from '../assets/images/image.png';
 
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState('Home');
@@ -46,6 +47,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-container">
         <Link to="/" className="logo-group" onClick={() => handleNavClick('Home')}>
+          <img src={logoImg} alt="logo" className="logo-icon" />
           <div className="logo-text-wrapper">
             <h1 className="logo-name">harsatharts9</h1>
             <span className="logo-tagline">Bringing Imagination to Life</span>
@@ -70,8 +72,8 @@ const Navbar = () => {
               >
                 {item.icon && item.icon} {item.name}
                 {activeLink === item.name && (
-                  <div 
-                    className="active-indicator" 
+                  <div
+                    className="active-indicator"
                     style={{ background: themeColors[item.name] }}
                   ></div>
                 )}
@@ -86,17 +88,17 @@ const Navbar = () => {
               >
                 {item.icon && item.icon} {item.name}
                 {activeLink === item.name && (
-                  <div 
-                    className="active-indicator" 
+                  <div
+                    className="active-indicator"
                     style={{ background: themeColors[item.name] }}
                   ></div>
                 )}
               </Link>
             )
           ))}
-          
-          <Link 
-            to="/order" 
+
+          <Link
+            to="/order"
             className="mobile-only mobile-order-btn"
             onClick={() => setIsOpen(false)}
           >
