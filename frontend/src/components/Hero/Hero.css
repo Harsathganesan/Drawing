@@ -1,7 +1,7 @@
 .hero-section {
   width: 100%;
-  min-height: 100vh;
-  padding: 100px 8% 80px;
+  min-height: 80vh;
+  padding: 130px 8% 40px;
   background-color: #ffffff;
   display: flex;
   align-items: center;
@@ -184,7 +184,8 @@
 
 @media (max-width: 600px) {
   .hero-section {
-    padding: 75px 5% 40px;
+    min-height: auto;
+    padding: 110px 5% 40px;
   }
 
   .hero-container {
