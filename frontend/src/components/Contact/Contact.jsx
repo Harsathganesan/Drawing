@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaInstagram, FaWhatsapp, FaYoutube, FaSpinner } from 'react-icons/fa';
-import orderApi from '../services/orderApi';
+import orderApi from '../../services/orderApi';
 import './Contact.css';
 
 const Contact = () => {

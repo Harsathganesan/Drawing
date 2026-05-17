@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 import './Navbar.css';
-import logoImg from '../assets/images/image.png';
+import logoImg from '../../assets/images/image.png';
 
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState('Home');

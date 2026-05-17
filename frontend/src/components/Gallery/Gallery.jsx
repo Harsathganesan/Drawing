@@ -2,16 +2,16 @@ import React from 'react';
 import './Gallery.css';
 
 // Import gallery images (10 images)
-import artwork1 from '../assets/images/1.jpeg';
-import artwork2 from '../assets/images/2.jpeg';
-import artwork3 from '../assets/images/3.jpeg';
-import artwork4 from '../assets/images/4.jpeg';
-import artwork5 from '../assets/images/5.jpeg';
-import artwork6 from '../assets/images/c1.jpeg';
-import artwork7 from '../assets/images/c4.jpeg';
-import artwork8 from '../assets/images/c3.jpeg';
-import artwork9 from '../assets/images/c2.jpeg';
-import artwork10 from '../assets/images/c5.jpeg';
+import artwork1 from '../../assets/images/1.jpeg';
+import artwork2 from '../../assets/images/2.jpeg';
+import artwork3 from '../../assets/images/3.jpeg';
+import artwork4 from '../../assets/images/4.jpeg';
+import artwork5 from '../../assets/images/5.jpeg';
+import artwork6 from '../../assets/images/c1.jpeg';
+import artwork7 from '../../assets/images/c4.jpeg';
+import artwork8 from '../../assets/images/c3.jpeg';
+import artwork9 from '../../assets/images/c2.jpeg';
+import artwork10 from '../../assets/images/c5.jpeg';
 
 const Gallery = () => {
   const artworks = [

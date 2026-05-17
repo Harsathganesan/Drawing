@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaShoppingCart, FaSpinner, FaArrowLeft, FaUser, FaEnvelope, FaPhone, FaPalette, FaRuler, FaImage } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import orderApi from '../services/orderApi';
+import orderApi from '../../services/orderApi';
 import './order.css';
 
 const Order = () => {
