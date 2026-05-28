@@ -256,6 +256,8 @@
     align-items: center;
     gap: 8px !important;
     margin: 0 auto;
+    position: relative;
+    left: -8px; /* shift slightly to the left to achieve perfect optical centering */
   }
 
   .mobile-plus-btn {
