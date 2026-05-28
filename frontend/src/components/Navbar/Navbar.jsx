@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome } from 'react-icons/fa';
+import { FaHome, FaPlus } from 'react-icons/fa';
 import './Navbar.css';
 import logoImg from '../../assets/images/image.png';
 
@@ -46,6 +46,17 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-container">
+        <Link
+          to="/order"
+          className="mobile-plus-btn"
+          onClick={() => setIsOpen(false)}
+          title="Place Your Order"
+        >
+          <div className="plus-icon-container">
+            <FaPlus />
+          </div>
+        </Link>
+
         <Link to="/" className="logo-group" onClick={() => handleNavClick('Home')}>
           <img src={logoImg} alt="logo" className="logo-icon" />
           <div className="logo-text-wrapper">

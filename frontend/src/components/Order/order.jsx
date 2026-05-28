@@ -89,6 +89,15 @@ const Order = () => {
 
   return (
     <div className="artistry-order-wrapper">
+      {loading && (
+        <div className="artistry-fullscreen-loader">
+          <div className="artistry-loader-content">
+            <FaSpinner className="artistry-loader-spinner" />
+            <h3>Processing Your Order...</h3>
+            <p>Please wait while we set up everything for you.</p>
+          </div>
+        </div>
+      )}
       <div className="artistry-order-container">
 
         <div className="artistry-order-content">
@@ -217,7 +226,7 @@ const Order = () => {
                   Cancel
                 </button>
                 <button type="submit" className="artistry-submit-btn" disabled={loading}>
-                  {loading ? <FaSpinner className="spinner" /> : 'Confirm Order'}
+                  Confirm Order
                 </button>
               </div>
 
