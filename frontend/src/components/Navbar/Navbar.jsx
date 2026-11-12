@@ -6,6 +6,7 @@ import logoImg from '../../assets/images/image.png';
 
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState('Home');
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isOrderPage = location.pathname === '/order';
 
@@ -16,6 +17,12 @@ const Navbar = () => {
   }, [isOrderPage]);
 
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -44,7 +51,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <div className="nav-container">
         <Link
           to="/order"

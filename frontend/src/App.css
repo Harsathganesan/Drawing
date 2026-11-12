@@ -1,54 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* App-level overrides — no Tailwind needed here */
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    @apply bg-gray-50;
-  }
+/* Ensure sections fill properly */
+html {
+  scroll-behavior: smooth;
 }
 
-@layer components {
-  .section-title {
-    @apply text-3xl md:text-4xl font-bold text-center mb-12;
-  }
-  
-  .container-custom {
-    @apply container mx-auto px-4 md:px-6;
-  }
-}
-
-/* Custom Animations */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 3s ease infinite;
+/* Remove legacy Tailwind utility duplication */
+.container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 5%;
 }

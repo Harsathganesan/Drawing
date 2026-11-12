@@ -12,6 +12,7 @@ if (fs.existsSync(path.join(__dirname, '..', 'Backend', '.env'))) {
 const connectDB = require('../Backend/config/db');
 const orderRoutes = require('../Backend/routes/orderRoutes');
 const feedbackRoutes = require('../Backend/routes/feedbackRoutes');
+const galleryRoutes = require('../Backend/routes/galleryRoutes');
 
 const app = express();
 
@@ -54,6 +55,8 @@ app.use('/orders', orderRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/feedbacks', feedbackRoutes); // Added for admin compatibility
 app.use('/feedback', feedbackRoutes);
+app.use('/api/gallery', galleryRoutes);
+app.use('/gallery', galleryRoutes);
 
 // Health Checks
 app.get('/api/ping', (req, res) => res.json({ status: 'API is alive', time: new Date() }));

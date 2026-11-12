@@ -6,6 +6,7 @@ const fs = require('fs');
 const connectDB = require('./config/db');
 const orderRoutes = require('./routes/orderRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
+const galleryRoutes = require('./routes/galleryRoutes');
 
 // Load env vars
 dotenv.config({ path: path.join(__dirname, '.env') });
@@ -70,6 +71,8 @@ app.use('/orders', orderRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/feedbacks', feedbackRoutes); // Added plural for admin compatibility
 app.use('/feedback', feedbackRoutes);
+app.use('/api/gallery', galleryRoutes);
+app.use('/gallery', galleryRoutes);
 
 // Health checks
 app.get('/api/ping', (req, res) => res.json({ status: 'API is alive', time: new Date() }));

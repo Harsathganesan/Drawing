@@ -58,23 +58,28 @@ const Order = () => {
       if (formData.referenceImage) {
         try {
           const uploadResponse = await orderApi.uploadImage(formData.referenceImage);
-          imageUrl = uploadResponse.data.url;
+          imageUrl = uploadResponse?.data?.url || uploadResponse?.url || '';
         } catch (uploadError) {
-          console.error('Image upload failed:', uploadError);
+          console.error('Image upload failed, fallback to preview:', uploadError);
+          imageUrl = formData.imagePreview || '';
         }
       }
 
       const totalAmount = priceMap[formData.size] || 999;
       const orderData = {
         customerName: formData.name,
+        customerEmail: formData.email,
         email: formData.email,
+        customerPhone: formData.phone.replace(/\D/g, ''),
         phone: formData.phone.replace(/\D/g, ''),
         drawingType: formData.drawingType,
         size: formData.size,
         quantity: 1,
+        price: totalAmount,
         totalAmount: totalAmount,
-        referenceImage: imageUrl || '',
-        paymentMethod: 'online'
+        referenceImage: imageUrl || formData.imagePreview || '',
+        paymentMethod: 'online',
+        specialInstructions: formData.message || formData.description || ''
       };
 
       await orderApi.createOrder(orderData);

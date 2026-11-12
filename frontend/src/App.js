@@ -8,15 +8,19 @@ import Gallery from './components/Gallery/Gallery';
 import Contact from './components/Contact/Contact';
 import Order from './components/Order/order';
 import Footer from './components/Footer/Footer';
+import Admin from './components/Admin/Admin';
+import AdminSecretTrigger from './components/Admin/AdminSecretTrigger';
 import Lenis from 'lenis';
 import './App.css';
 
-// Separate component so useLocation works inside Router
 function AppContent() {
   const location = useLocation();
+  const isAdminPage = location.pathname === '/admin';
 
-  // Smooth scroll (Lenis) — runs once
+  // Smooth scroll (Lenis) — runs once for main website
   useEffect(() => {
+    if (isAdminPage) return; // Disable smooth scroll on admin for fast dashboard responsiveness
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -25,19 +29,18 @@ function AppContent() {
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
     return () => lenis.destroy();
-  }, []);
+  }, [isAdminPage]);
 
   // Scroll reveals — re-runs on every route change
   useEffect(() => {
-    // Step 1: scroll to top
     window.scrollTo(0, 0);
 
-    // Step 2: reset all reveal-active classes
+    if (isAdminPage) return;
+
     document.querySelectorAll('.reveal').forEach(el => {
       el.classList.remove('reveal-active');
     });
 
-    // Step 3: set up observer after DOM settles
     const timer = setTimeout(() => {
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -50,8 +53,6 @@ function AppContent() {
       }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
       document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-      // Store observer to clean up
       window.__revealObserver = revealObserver;
     }, 150);
 
@@ -61,11 +62,12 @@ function AppContent() {
         window.__revealObserver.disconnect();
       }
     };
-  }, [location.pathname]);
+  }, [location.pathname, isAdminPage]);
 
   return (
     <div className="App">
-      <Navbar />
+      {!isAdminPage && <Navbar />}
+      
       <Routes>
         <Route path="/" element={
           <>
@@ -78,7 +80,11 @@ function AppContent() {
           </>
         } />
         <Route path="/order" element={<Order />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
+
+      {/* Secret '?' trigger for Admin access */}
+      <AdminSecretTrigger />
     </div>
   );
 }
